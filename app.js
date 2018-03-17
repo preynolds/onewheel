@@ -17,8 +17,8 @@ var transporter = nodemailer.createTransport({
 });
 
 var mailOptions = {
-  from: 'soniczen@gmail.com',
-  to: 'patrick@soniczen.com',
+  from: '',
+  to: '',
   subject: 'Float Day',
   text: '',
   attachments: [
