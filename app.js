@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 const ORDERNUMBER = '#ordernumber';
 const EMAIL = '#email';
 const BUTTON_SELECTOR = '#submit_btn';
-const SHIPDAY = '#ship_day';
+const SHIPDAY = '.js-toggle-form.is-active';
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',
