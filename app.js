@@ -2,11 +2,11 @@ const puppeteer = require('puppeteer');
 const nodemailer = require('nodemailer');
 
 
-
 const ORDERNUMBER = '#ordernumber';
 const EMAIL = '#email';
 const BUTTON_SELECTOR = '#submit_btn';
-const SHIPDAY = '.delivery-single';
+const DELIVERY_SINGLE = '.delivery-single';
+
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -17,8 +17,8 @@ var transporter = nodemailer.createTransport({
 });
 
 var mailOptions = {
-  from: 'soniczen@gmail.com',
-  to: 'patrick@soniczen.com',
+  from: '',
+  to: '',
   subject: 'Float Day',
   text: '',
   attachments: [
@@ -45,11 +45,18 @@ async function run() {
 
   await page.click(BUTTON_SELECTOR);
 
-  await page.waitForSelector(SHIPDAY);
+  await page.waitForSelector(DELIVERY_SINGLE);
+
+  await page.waitFor(3000); // to wait for 1000ms
+
+  const textContenDay = await page.evaluate(() => document.querySelector('#ship_day').textContent);
+  const textContentMonth = await page.evaluate(() => document.querySelector('.arrival-small').textContent);
+
+  console.log(textContentMonth, textContenDay);
 
   await page.screenshot({ path: 'screenshots/SHIPDAY.png' });
 
-  transporter.sendMail(mailOptions, function(error, info){
+  await transporter.sendMail(mailOptions, function(error, info){
     if (error) {
       console.log(error);
     } else {
@@ -62,3 +69,5 @@ async function run() {
 
 
 run();
+
+
